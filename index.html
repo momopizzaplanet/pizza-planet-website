@@ -1,317 +1,644 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizza Planet Bad Vöslau</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--black:#080808;--black2:#101010;--black3:#181818;--black4:#222;--gold:#c9a84c;--gold-light:#e8c47a;--white:#f5f0e8;--muted:#888880;--border:#c9a84c22;--border2:#c9a84c44}
-html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid var(--border);background:rgba(8,8,8,0.97)}
-.nav-logo{display:flex;align-items:center;gap:12px}
-.nav-logo img{height:42px;width:42px;object-fit:contain;border-radius:50%}
-.nav-logo-text{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-light)}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover{color:var(--gold-light)}
-.nav-cta{background:var(--gold);color:var(--black);padding:10px 20px;border-radius:3px;font-size:11px;font-weight:700;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase}
-.nav-cta:hover{background:var(--gold-light)}
-.mob-menu{display:none;flex-direction:column;gap:5px;cursor:pointer}
-.mob-menu span{display:block;width:22px;height:1.5px;background:var(--gold-light)}
-.mob-nav{display:none;position:fixed;top:68px;left:0;right:0;background:#080808;border-bottom:1px solid var(--border);padding:20px;flex-direction:column;gap:0;z-index:199}
-.mob-nav.open{display:flex}
-.mob-nav a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:14px 0;border-bottom:1px solid var(--border)}
-.mob-nav a:last-child{color:var(--gold);border:none}
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;background:var(--black);position:relative}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 40%,rgba(201,168,76,0.05) 0%,transparent 70%);pointer-events:none}
-.hero-logo{width:min(220px,50vw);height:auto;margin-bottom:28px;border-radius:50%;border:2px solid var(--border2)}
-.hero-eyebrow{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(40px,9vw,88px);font-weight:900;line-height:.95;letter-spacing:-2px;color:var(--white);margin-bottom:14px}
-.hero-title em{color:var(--gold-light);font-style:normal}
-.hero-divider{width:50px;height:1px;background:var(--gold);margin:18px auto}
-.hero-sub{font-size:13px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:36px}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:52px}
-.btn-gold{background:var(--gold);color:var(--black);padding:15px 30px;border-radius:3px;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:all .2s}
-.btn-gold:hover{background:var(--gold-light)}
-.btn-outline{background:transparent;color:var(--gold-light);padding:15px 30px;border-radius:3px;font-size:12px;font-weight:600;text-decoration:none;border:1px solid var(--border2);letter-spacing:2px;text-transform:uppercase;transition:all .2s}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-.hero-stats{display:flex;border:1px solid var(--border2);border-radius:3px;overflow:hidden}
-.hs{padding:18px 28px;text-align:center;border-right:1px solid var(--border2)}
-.hs:last-child{border:none}
-.hs-val{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold-light);margin-bottom:3px}
-.hs-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-section{padding:90px 24px}
-.container{max-width:1100px;margin:0 auto}
-.sec-eyebrow{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,44px);font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.1}
-.sec-title em{color:var(--gold-light);font-style:normal}
-.sec-divider{width:36px;height:1px;background:var(--gold);margin-bottom:36px}
-#speisekarte{background:var(--black2)}
-.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.cat-tab{padding:8px 16px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:2px;text-transform:uppercase;font-family:'Inter',sans-serif;transition:all .2s}
-.cat-tab:hover,.cat-tab.active{background:var(--gold);border-color:var(--gold);color:var(--black)}
-.search-wrap{position:relative;margin-bottom:28px;max-width:400px}
-.search-box{width:100%;padding:11px 14px 11px 38px;background:var(--black3);border:1px solid var(--border);border-radius:2px;color:var(--white);font-size:13px;font-family:'Inter',sans-serif;outline:none}
-.search-box:focus{border-color:var(--gold)}
-.search-box::placeholder{color:var(--muted)}
-.si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px}
-.menu-section{margin-bottom:32px}
-.menu-cat-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold-light);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border2)}
-.menu-rows{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1px;border:1px solid var(--border)}
-.menu-item{background:var(--black3);padding:14px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:background .15s;border-bottom:1px solid var(--border)}
-.menu-item:hover{background:var(--black4)}
-.mi-num{font-size:9px;color:var(--gold);letter-spacing:1.5px;font-weight:600;margin-bottom:2px;text-transform:uppercase}
-.mi-name{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px;line-height:1.3}
-.mi-desc{font-size:11px;color:var(--muted);line-height:1.4}
-.mi-price{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold-light);white-space:nowrap}
-.menu-section.hidden{display:none}
-.menu-item.hidden{display:none}
-#angebot{background:var(--black)}
-.offer-wrap{border:1px solid var(--border2);border-radius:2px;overflow:hidden}
-.offer-header{background:var(--black3);padding:28px 36px;text-align:center;border-bottom:1px solid var(--border2)}
-.offer-header h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold-light);margin-bottom:6px}
-.offer-header p{font-size:12px;color:var(--muted);letter-spacing:.5px}
-.offer-table{display:grid;grid-template-columns:1fr 1fr}
-.offer-col{padding:36px;text-align:center;border-right:1px solid var(--border2)}
-.offer-col:last-child{border:none}
-.offer-col.prime{background:linear-gradient(135deg,rgba(201,168,76,0.05),rgba(201,168,76,0.12))}
-.offer-days-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.offer-days{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:18px;line-height:1.5}
-.offer-pct{font-family:'Playfair Display',serif;font-size:68px;font-weight:900;line-height:1;margin-bottom:6px}
-.offer-pct.gold{color:var(--gold-light)}
-.offer-pct.silver{color:#c0c0c0}
-.offer-type{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.offer-conditions{padding:24px 36px;background:var(--black3);border-top:1px solid var(--border2);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-.oc{display:flex;align-items:center;gap:10px}
-.oc-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.oc-text{font-size:12px;color:var(--muted)}
-.offer-cta{padding:24px 36px;text-align:center;border-top:1px solid var(--border2)}
-#lieferung{background:var(--black2)}
-.delivery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px;border:1px solid var(--border)}
-.dc{background:var(--black3);padding:26px 22px}
-.dc-area{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold-light);margin-bottom:5px}
-.dc-zone{font-size:11px;color:var(--muted);letter-spacing:.5px;margin-bottom:12px;line-height:1.6}
-.dc-fee{font-size:13px;color:var(--white);font-weight:500}
-.dc-min{font-size:11px;color:var(--muted);margin-top:3px}
-#kontakt{background:var(--black)}
-.kontakt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid var(--border)}
-.kc{background:var(--black3);padding:36px}
-.kc-title{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
-.kc-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px}
-.kc-icon{font-size:16px;margin-top:1px}
-.kc-label{font-size:9px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
-.kc-val{font-size:13px;color:var(--white);font-weight:500;line-height:1.5}
-.kc-link{color:var(--white);text-decoration:none}
-.kc-link:hover{color:var(--gold-light)}
-.map-btn{display:inline-block;background:transparent;color:var(--gold);border:1px solid var(--border2);padding:11px 22px;border-radius:2px;font-size:10px;font-weight:700;text-decoration:none;letter-spacing:2px;text-transform:uppercase;margin-top:6px;transition:all .2s}
-.map-btn:hover{background:var(--gold);color:var(--black)}
-footer{background:var(--black);border-top:1px solid var(--border);padding:44px 24px;text-align:center}
-.footer-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px}
-.footer-logo img{height:44px;width:44px;object-fit:contain;border-radius:50%}
-.footer-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold-light)}
-.footer-div{width:36px;height:1px;background:var(--border2);margin:16px auto}
-.footer-info{font-size:11px;color:var(--muted);letter-spacing:1px;line-height:2}
-@media(max-width:768px){
-  .offer-cta a{font-size:14px;padding:14px 16px;word-break:break-all}
-  .offer-cta{padding:16px}
-  nav{padding:0 18px}
-  .nav-links,.nav-cta{display:none}
-  .mob-menu{display:flex}
-  .hero-stats{flex-direction:column}
-  .hs{border-right:none;border-bottom:1px solid var(--border2)}
-  .hs:last-child{border:none}
-  .offer-table{grid-template-columns:1fr}
-  .offer-col{border-right:none;border-bottom:1px solid var(--border2)}
-  .kontakt-grid{grid-template-columns:1fr}
-  section{padding:60px 18px}
-}
-</style>
-</head>
-<body>
+￼
+Pizza Planet
+		SPEISEKARTE
+		FIRMENANGEBOT
+		LIEFERUNG
+		KONTAKT
+JETZT ANRUFEN
+EST. 1995 · BAD VÖSLAU
+￼
+PIZZA PLANET
 
-<nav>
-  <div class="nav-logo">
-    <img src="data:image/jpeg;base64,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" alt="Pizza Planet Logo">
-    <span class="nav-logo-text">Pizza Planet</span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#speisekarte">Speisekarte</a></li>
-    <li><a href="#angebot">Firmenangebot</a></li>
-    <li><a href="#lieferung">Lieferung</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
-  <a class="nav-cta" href="tel:0225271992">Jetzt anrufen</a>
-  <div class="mob-menu" onclick="document.getElementById('mn').classList.toggle('open')">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-<div class="mob-nav" id="mn">
-  <a href="#speisekarte" onclick="document.getElementById('mn').classList.remove('open')">Speisekarte</a>
-  <a href="#angebot" onclick="document.getElementById('mn').classList.remove('open')">Firmenangebot</a>
-  <a href="#lieferung" onclick="document.getElementById('mn').classList.remove('open')">Lieferung</a>
-  <a href="#kontakt" onclick="document.getElementById('mn').classList.remove('open')">Kontakt</a>
-  <a href="tel:0225271992">📞 02252 71 99 2</a>
-</div>
+WR. NEUSTÄDTER STRASSE 1–3 · 2540 BAD VÖSLAU
+📞 02252 71 99 2
+ONLINE BESTELLEN
+11–22 Uhr
+TÄGLICH GEÖFFNET
+ab € 10
+MINDESTBESTELLWERT
+Est. 1995
+SEIT ÜBER 30 JAHREN
+UNSERE KÜCHE
+Die Speisekarte
 
-<section class="hero">
-  <div class="hero-eyebrow">Est. 1995 · Bad Vöslau</div>
-  <img class="hero-logo" src="data:image/jpeg;base64,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" alt="Pizza Planet">
-  <h1 class="hero-title">PIZZA<br><em>PLANET</em></h1>
-  <div class="hero-divider"></div>
-  <p class="hero-sub">Wr. Neustädter Straße 1–3 · 2540 Bad Vöslau</p>
-  <div class="hero-btns">
-    <a class="btn-gold" href="tel:0225271992">📞 02252 71 99 2</a>
-    <a class="btn-outline" href="https://pizza-planet-badvoeslau.at" target="_blank">Online bestellen</a>
-  </div>
-  <div class="hero-stats">
-    <div class="hs"><div class="hs-val">11–22 Uhr</div><div class="hs-label">Täglich geöffnet</div></div>
-    <div class="hs"><div class="hs-val">ab € 10</div><div class="hs-label">Mindestbestellwert</div></div>
-    <div class="hs"><div class="hs-val">Est. 1995</div><div class="hs-label">Seit über 30 Jahren</div></div>
-  </div>
-</section>
+ALLE
+PIZZA
+FAMILIEN PIZZA
+BURGER
+PASTA
+AL FORNO
+FLEISCHGERICHTE
+GEBACKENES
+RISOTTO
+KLEINER HUNGER
+SALATE
+BEILAGEN
+PALATSCHINKEN
+DESSERT
+GETRÄNKE
+🔍
+Pizza
+101
+Marinara
+ohne Käse, mit Knoblauch
+€ 8,00
+102
+Margherita
+€ 9,40
+103
+Cipolla
+Zwiebeln
+€ 9,40
+104
+Fungi
+frische Champignons
+€ 9,40
+105
+Cardinale
+Schinken
+€ 9,40
+106
+Tatina
+Schinken, Champignons
+€ 10,40
+107
+Calzone
+zusammengeschlagen, Schinken, Champignons
+€ 10,40
+108
+Bambino
+Schinken, Mais
+€ 10,40
+109
+Hawaii
+Schinken, Ananas
+€ 10,40
+110
+Napolitana
+Sardellen, Kapern
+€ 10,40
+111
+Fiorentina
+Schinken, Spinat
+€ 10,40
+112
+Del Contandino
+Speck, Pfefferoni
+€ 10,40
+113
+Trattatio di Carne
+Fleischsauce
+€ 10,40
+114
+Salami
+€ 10,40
+115
+Milano
+Salami, Mais
+€ 10,90
+116
+Quattro Stagioni
+Schinken, Champignons, Artischocken
+€ 10,90
+117
+Provenciale
+Schinken, Speck, Mais, Pfefferoni
+€ 11,40
+118
+Tonno
+Thunfisch, Zwiebeln
+€ 11,40
+119
+Spinaci
+Spinat, Weißkäse, Zwiebeln
+€ 11,40
+120
+Primavera
+Champignons, Artischocken, Spinat, Broccoli, Oliven
+€ 11,40
+121
+Leonardo
+Broccoli, Mais, Artischocken, Paprika
+€ 11,40
+122
+Pomodoro e Basilico
+Tomaten, Mozzarella, Zwiebeln, Chili, Basilikum
+€ 11,40
+123
+Diavolo
+Schinken, Pfefferoni, Zwiebeln, Chilli
+€ 11,40
+124
+Al Capone
+Schinken, Salami, Zwiebel, Chilli
+€ 11,40
+125
+Carmen
+Salami, Zwiebeln, Pfefferoni, Oliven
+€ 11,40
+126
+Romana
+Salami, Spiegelei, Oliven
+€ 11,40
+127
+Rusticana
+Schinken, Salami, Pfefferoni, Spiegelei
+€ 11,40
+128
+Toscana
+Schinken, Zwiebel, Broccoli, Spiegelei
+€ 11,40
+129
+Capricciosa
+Pizzabodenschinken, Champignons, Artischocken, Sardellen, Oliven
+€ 11,80
+130
+Quattro Formaggi
+4 Käsesorten
+€ 11,80
+131
+Frutti di Mare
+Thunfisch, Meeresfrüchte, Oliven
+€ 11,80
+132
+Venezia
+Speck, Salami, Pfefferoni, Zwiebel
+€ 11,80
+133
+Amore
+Speck, rote Bohnen, Spiegelei
+€ 11,40
+134
+Pollo
+Putenstreifen, Champignons, Paprika, Mozzarella
+€ 12,40
+135
+Rucola
+Mozzarella, Rucola, Cherry Tomaten, Grana
+€ 12,40
+136
+Mexicana
+Putenstreifen, rote Bohnen, Zwiebel, Mais
+€ 11,40
+137
+Melanzane
+Melanzani, Mozzarella, Tomatenscheiben, Paprika
+€ 11,40
+138
+Kebappizza
+Kebapfleisch, Tomaten, Zwiebel, Sauce
+€ 13,40
+139
+Pizza Fantasie
+Beläge mit 6 Auflagen nach Wunsch
+€ 13,40
+140
+Gamberone
+Mozzarella, Scampi, Rucola
+€ 17,40
+141
+Verdura
+frisches Gemüse
+€ 11,40
+143
+Inferno
+scharf: Speck, Sardellen, Pfefferoni
+€ 12,40
+144
+Vera Cruz
+Fleischsauce, Jalapeños, Zwiebel, Taco-Sauce
+€ 12,40
+145
+Cheesy Garlic
+Mozzarella, Schafskäse, Sauerrahm, Knoblauchsauce
+€ 11,40
+Familien Pizza
+142
+Familien Pizza für 2 – 2 Auflagen
+für 2 Personen
+€ 16,90
+143B
+Familien Pizza für 2 – 4 Auflagen
+für 2 Personen
+€ 19,90
+144B
+Familien Pizza für 2 – 6 Auflagen
+für 2 Personen
+€ 22,90
+157
+Familien Pizza für 4 – 2 Auflagen
+für 4 Personen
+€ 25,90
+158
+Familien Pizza für 4 – 4 Auflagen
+für 4 Personen
+€ 28,90
+159
+Familien Pizza für 4 – 6 Auflagen
+für 4 Personen
+€ 31,90
+148
+American Pizza – 2 Auflagen
+€ 15,90
+149
+American Pizza – 4 Auflagen
+€ 16,90
+150
+American Pizza – 6 Auflagen
+€ 18,90
+Burger
+600
+Galaxy Burger
+Cheeseburger mit Cheddar, Salat, Tomate, hausgemachter Sauce
+€ 12,90
+601
+Big Bang Burger
+Doppel-Patty mit extra Käse, Speck & Zwiebeln
+€ 13,90
+602
+Meteor Burger
+scharf mit Jalapeños, Cheese-Sauce & Zwiebeln
+€ 12,90
+603
+Planet Veggie
+vegetarisch mit Tomaten, Salat, Paprika und Schafskäse
+€ 12,90
+604
+Lunar Chicken
+knuspriger Hühner-Burger mit Zwiebeln, Salat
+€ 12,90
+605
+Rocket Burger
+3 Patties, Käse, Speck, Salat, Tomaten, Zwiebeln
+€ 14,90
+606
+Mars Deluxe
+Patty mit Speck, Rucola, Zwiebeln, Tomaten & Sauce
+€ 12,90
+607
+Black Hole Burger
+Patty, 2 Mozzarella Sticks, Cheddar, Salat, Tomaten & Sauce
+€ 13,90
+608
+Asteroid Burger
+Patty ohne Käse, Sauce, Salat, Tomaten und Zwiebeln
+€ 12,90
+Pasta
+211
+Alla Napoletana
+Zwiebel, Knoblauch in Tomatensauce
+€ 10,70
+212
+Alla Bolognese
+Fleischsauce
+€ 10,70
+213
+Al Tonno
+Thunfisch, Zwiebel in Tomatensauce
+€ 10,70
+214
+Al Arrabiata
+Kapern, Oliven, Chili in Rosasauce
+€ 10,70
+215
+Al Amatriciana
+Speck, Zwiebeln, Knoblauch in Tomatensauce
+€ 10,70
+216
+Alla Siciliana
+Artischocken, Oliven, Oregano, Chili in Tomatensauce
+€ 10,70
+217
+Carbonara
+Speck, Obers, Ei in Oberssauce
+€ 10,70
+218
+Alla Montese
+Schinken, Broccoli, Oberssauce
+€ 10,70
+219
+Con Funghi
+Champignons, Oberssauce
+€ 10,70
+220
+Gorgonzola
+Gorgonzola, Oberssauce
+€ 10,70
+221
+Aglio e Olio
+Knoblauch, Olivenöl, Pfefferonie
+€ 10,70
+222
+Frutti di Mare
+Meeresfrüchte, Knoblauch in Tomatensauce
+€ 10,70
+223
+Di Pollo
+Putenfleisch, Champignon in Obers
+€ 10,70
+224
+Spinaci
+Spinat, Zwiebeln in Obers
+€ 10,70
+Al Forno
+301
+Lasagne
+€ 10,40
+303
+Broccoli al Forno
+mit Schinken, Broccoli, Oberssauce
+€ 10,20
+304
+Spinat al Forno
+mit Schafkäse, Blattspinat in Oberssauce & Ei
+€ 10,20
+307
+Makkeroni
+Penne mit Fleischsauce
+€ 10,70
+308
+Feta al Forno
+Feta, Cherrytomaten, Zwiebeln und Pfefferoni
+€ 12,90
+Fleischgerichte
+411
+Wienerschnitzel
+gebacken mit Pommes, Kartoffelsalat oder Reis
+€ 11,80
+412
+Putenschnitzel
+gebacken mit Pommes, Kartoffelsalat oder Reis
+€ 11,80
+413
+Putencordon Bleu
+gebacken mit Pommes, Kartoffelsalat oder Reis
+€ 11,80
+414
+Chicken-Frites
+gebackene Hühnerstreifen mit Pommes
+€ 11,80
+417
+Grillteller
+verschiedene Fleischsorten mit Bratkartoffeln & Sauce
+€ 16,80
+418
+Putenspiß
+mit gegrilltem Zwiebel, Paprika & Pommes
+€ 14,80
+419
+Piccata Milanese
+Putenschnitzel in Parmesan-Ei, mit Spaghetti Pomodoro
+€ 12,80
+420
+Scaloppini Prosciutto
+Putenfilet mit Schinken & Käse, dazu Pommes oder Reis
+€ 14,80
+421
+Scaloppini Funghi
+Putenfilet in Champignon-Oberssauce, dazu Reis oder Pommes
+€ 14,80
+Gebackenes
+401
+Emmentaler
+mit Pommes, Sauce Tartare
+€ 10,90
+402
+Mozzarella-Sticks
+mit Pommes & Sauce Tartare
+€ 10,90
+404
+Zwiebelringe
+mit Sauce Tarfare
+€ 8,90
+406
+Camembert
+mit Pommes & Preiselbeeren
+€ 11,20
+407
+Gemüse Laibchen
+mit Pommes & Salat, dazu Joghurtsauce
+€ 11,90
+Risotto
+232
+Risotto Frutti di Mare
+mit Meeresfrüchten
+€ 11,30
+233
+Risotto Mexicano
+mit Putenfleisch, rote Bohnen, Mais, scharf
+€ 11,30
+235
+Risotto Verdura
+gemischtes Gemüse in Tomatensauce
+€ 11,30
+Kleiner Hunger
+151
+Pizza Spezial
+Gefüllt mit Pizzablockschinken & Käse
+€ 5,90
+152
+Pizza Brot
+€ 3,90
+153
+Schnitzel Sandwich
+€ 5,90
+154
+Mini Pizza
+mit 1 Auflage nach Wahl
+€ 6,20
+Salate
+721
+Fitnesssalat
+köstliche Salatvariaton mit Putenfleisch
+€ 9,90
+722
+Insalata Verde
+grüner Salat
+€ 5,50
+724
+Insalata Mista
+gemischter Salat
+€ 6,90
+728
+Insalata Pecorino
+gemischter Salat mit Schafkäse & Oliven
+€ 8,90
+72
+Insalata Rucola
+Tomaten, Rucola, Grana
+€ 9,90
+Beilagen
+431
+Pommes / Reis
+€ 3,50
+432
+Kartoffelsalat
+€ 3,50
+433
+Bratkartoffeln
+€ 4,50
+434
+Extra Sauce
+cocktail / kebab / mayo / ketchup / tartare
+€ 1,50
+Palatschinken
+504
+Spinaci Palatschinken
+gefüllt mit Spinat & Schafskäse
+€ 8,90
+502
+Prosciutto Palatschinken
+gefüllt mit Pizzablockschinken & Champignon
+€ 8,90
+515
+Piatto di Carne
+gefüllt mit Fleischsauce
+€ 8,90
+Dessert
+801
+Tiramisu
+€ 5,90
+802
+Topfenstrudel
+€ 5,50
+803
+Mohr im Hemd
+€ 5,50
+804
+Nußpalatschinken
+2 Stk.
+€ 5,90
+805
+Topfenpalatschinken
+2 Stk.
+€ 5,90
+806
+Marmeladepalatschinken
+2 Stk.
+€ 5,90
+807
+Eismarillenknödel
+€ 6,90
+Getränke
+901
+Coca Cola
+0,5 L
+€ 2,80
+902
+Cola Light
+0,5 L
+€ 2,80
+903
+Fanta
+0,5 L
+€ 2,80
+904
+Sprite
+0,5 L
+€ 2,80
+905
+Eistee Zitrone
+0,5 L
+€ 2,80
+906
+Eistee Pfirsich
+0,5 L
+€ 2,80
+907
+Almdudler
+0,5 L
+€ 3,20
+908
+Mineralwasser
+0,5 L
+€ 2,50
+909
+Red Bull
+0,25 L
+€ 3,10
+910
+Bier
+0,5 L
+€ 3,10
+911
+Ayran
+0,33 L
+€ 2,20
+912
+Cappy Orange
+0,5 L
+€ 2,80
+913
+Cola (Dose)
+0,33 L
+€ 2,50
+914
+Fritz Kola
+0,33 L
+€ 3,50
+EXKLUSIV FÜR SCHULEN & FIRMEN
+Schul- & Firmenangebot
 
-<section id="speisekarte">
-  <div class="container">
-    <div class="sec-eyebrow">Unsere Küche</div>
-    <h2 class="sec-title">Die <em>Speisekarte</em></h2>
-    <div class="sec-divider"></div>
-    <div class="cat-tabs" id="cat-tabs">
-      <button class="cat-tab active" onclick="filterCat('Alle')">Alle</button>
-      <button class="cat-tab" onclick="filterCat('Pizza')">Pizza</button><button class="cat-tab" onclick="filterCat('Familien Pizza')">Familien Pizza</button><button class="cat-tab" onclick="filterCat('Burger')">Burger</button><button class="cat-tab" onclick="filterCat('Pasta')">Pasta</button><button class="cat-tab" onclick="filterCat('Al Forno')">Al Forno</button><button class="cat-tab" onclick="filterCat('Fleischgerichte')">Fleischgerichte</button><button class="cat-tab" onclick="filterCat('Gebackenes')">Gebackenes</button><button class="cat-tab" onclick="filterCat('Risotto')">Risotto</button><button class="cat-tab" onclick="filterCat('Kleiner Hunger')">Kleiner Hunger</button><button class="cat-tab" onclick="filterCat('Salate')">Salate</button><button class="cat-tab" onclick="filterCat('Beilagen')">Beilagen</button><button class="cat-tab" onclick="filterCat('Palatschinken')">Palatschinken</button><button class="cat-tab" onclick="filterCat('Dessert')">Dessert</button><button class="cat-tab" onclick="filterCat('Getränke')">Getränke</button>
-    </div>
-    <div class="search-wrap">
-      <span class="si">🔍</span>
-      <input class="search-box" type="text" id="search" placeholder="Gericht suchen..." oninput="filterSearch()">
-    </div>
-    <div class="menu-section" data-cat="Pizza"><div class="menu-cat-title">Pizza</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">101</div><div class="mi-name">Marinara</div><div class="mi-desc">ohne Käse, mit Knoblauch</div></div><div class="mi-price">€ 8,00</div></div><div class="menu-item"><div><div class="mi-num">102</div><div class="mi-name">Margherita</div></div><div class="mi-price">€ 9,40</div></div><div class="menu-item"><div><div class="mi-num">103</div><div class="mi-name">Cipolla</div><div class="mi-desc">Zwiebeln</div></div><div class="mi-price">€ 9,40</div></div><div class="menu-item"><div><div class="mi-num">104</div><div class="mi-name">Fungi</div><div class="mi-desc">frische Champignons</div></div><div class="mi-price">€ 9,40</div></div><div class="menu-item"><div><div class="mi-num">105</div><div class="mi-name">Cardinale</div><div class="mi-desc">Schinken</div></div><div class="mi-price">€ 9,40</div></div><div class="menu-item"><div><div class="mi-num">106</div><div class="mi-name">Tatina</div><div class="mi-desc">Schinken, Champignons</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">107</div><div class="mi-name">Calzone</div><div class="mi-desc">zusammengeschlagen, Schinken, Champignons</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">108</div><div class="mi-name">Bambino</div><div class="mi-desc">Schinken, Mais</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">109</div><div class="mi-name">Hawaii</div><div class="mi-desc">Schinken, Ananas</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">110</div><div class="mi-name">Napolitana</div><div class="mi-desc">Sardellen, Kapern</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">111</div><div class="mi-name">Fiorentina</div><div class="mi-desc">Schinken, Spinat</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">112</div><div class="mi-name">Del Contandino</div><div class="mi-desc">Speck, Pfefferoni</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">113</div><div class="mi-name">Trattatio di Carne</div><div class="mi-desc">Fleischsauce</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">114</div><div class="mi-name">Salami</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">115</div><div class="mi-name">Milano</div><div class="mi-desc">Salami, Mais</div></div><div class="mi-price">€ 10,90</div></div><div class="menu-item"><div><div class="mi-num">116</div><div class="mi-name">Quattro Stagioni</div><div class="mi-desc">Schinken, Champignons, Artischocken</div></div><div class="mi-price">€ 10,90</div></div><div class="menu-item"><div><div class="mi-num">117</div><div class="mi-name">Provenciale</div><div class="mi-desc">Schinken, Speck, Mais, Pfefferoni</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">118</div><div class="mi-name">Tonno</div><div class="mi-desc">Thunfisch, Zwiebeln</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">119</div><div class="mi-name">Spinaci</div><div class="mi-desc">Spinat, Weißkäse, Zwiebeln</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">120</div><div class="mi-name">Primavera</div><div class="mi-desc">Champignons, Artischocken, Spinat, Broccoli, Oliven</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">121</div><div class="mi-name">Leonardo</div><div class="mi-desc">Broccoli, Mais, Artischocken, Paprika</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">122</div><div class="mi-name">Pomodoro e Basilico</div><div class="mi-desc">Tomaten, Mozzarella, Zwiebeln, Chili, Basilikum</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">123</div><div class="mi-name">Diavolo</div><div class="mi-desc">Schinken, Pfefferoni, Zwiebeln, Chilli</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">124</div><div class="mi-name">Al Capone</div><div class="mi-desc">Schinken, Salami, Zwiebel, Chilli</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">125</div><div class="mi-name">Carmen</div><div class="mi-desc">Salami, Zwiebeln, Pfefferoni, Oliven</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">126</div><div class="mi-name">Romana</div><div class="mi-desc">Salami, Spiegelei, Oliven</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">127</div><div class="mi-name">Rusticana</div><div class="mi-desc">Schinken, Salami, Pfefferoni, Spiegelei</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">128</div><div class="mi-name">Toscana</div><div class="mi-desc">Schinken, Zwiebel, Broccoli, Spiegelei</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">129</div><div class="mi-name">Capricciosa</div><div class="mi-desc">Pizzabodenschinken, Champignons, Artischocken, Sardellen, Oliven</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">130</div><div class="mi-name">Quattro Formaggi</div><div class="mi-desc">4 Käsesorten</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">131</div><div class="mi-name">Frutti di Mare</div><div class="mi-desc">Thunfisch, Meeresfrüchte, Oliven</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">132</div><div class="mi-name">Venezia</div><div class="mi-desc">Speck, Salami, Pfefferoni, Zwiebel</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">133</div><div class="mi-name">Amore</div><div class="mi-desc">Speck, rote Bohnen, Spiegelei</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">134</div><div class="mi-name">Pollo</div><div class="mi-desc">Putenstreifen, Champignons, Paprika, Mozzarella</div></div><div class="mi-price">€ 12,40</div></div><div class="menu-item"><div><div class="mi-num">135</div><div class="mi-name">Rucola</div><div class="mi-desc">Mozzarella, Rucola, Cherry Tomaten, Grana</div></div><div class="mi-price">€ 12,40</div></div><div class="menu-item"><div><div class="mi-num">136</div><div class="mi-name">Mexicana</div><div class="mi-desc">Putenstreifen, rote Bohnen, Zwiebel, Mais</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">137</div><div class="mi-name">Melanzane</div><div class="mi-desc">Melanzani, Mozzarella, Tomatenscheiben, Paprika</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">138</div><div class="mi-name">Kebappizza</div><div class="mi-desc">Kebapfleisch, Tomaten, Zwiebel, Sauce</div></div><div class="mi-price">€ 13,40</div></div><div class="menu-item"><div><div class="mi-num">139</div><div class="mi-name">Pizza Fantasie</div><div class="mi-desc">Beläge mit 6 Auflagen nach Wunsch</div></div><div class="mi-price">€ 13,40</div></div><div class="menu-item"><div><div class="mi-num">140</div><div class="mi-name">Gamberone</div><div class="mi-desc">Mozzarella, Scampi, Rucola</div></div><div class="mi-price">€ 17,40</div></div><div class="menu-item"><div><div class="mi-num">141</div><div class="mi-name">Verdura</div><div class="mi-desc">frisches Gemüse</div></div><div class="mi-price">€ 11,40</div></div><div class="menu-item"><div><div class="mi-num">143</div><div class="mi-name">Inferno</div><div class="mi-desc">scharf: Speck, Sardellen, Pfefferoni</div></div><div class="mi-price">€ 12,40</div></div><div class="menu-item"><div><div class="mi-num">144</div><div class="mi-name">Vera Cruz</div><div class="mi-desc">Fleischsauce, Jalapeños, Zwiebel, Taco-Sauce</div></div><div class="mi-price">€ 12,40</div></div><div class="menu-item"><div><div class="mi-num">145</div><div class="mi-name">Cheesy Garlic</div><div class="mi-desc">Mozzarella, Schafskäse, Sauerrahm, Knoblauchsauce</div></div><div class="mi-price">€ 11,40</div></div></div></div><div class="menu-section" data-cat="Familien Pizza"><div class="menu-cat-title">Familien Pizza</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">142</div><div class="mi-name">Familien Pizza für 2 – 2 Auflagen</div><div class="mi-desc">für 2 Personen</div></div><div class="mi-price">€ 16,90</div></div><div class="menu-item"><div><div class="mi-num">143b</div><div class="mi-name">Familien Pizza für 2 – 4 Auflagen</div><div class="mi-desc">für 2 Personen</div></div><div class="mi-price">€ 19,90</div></div><div class="menu-item"><div><div class="mi-num">144b</div><div class="mi-name">Familien Pizza für 2 – 6 Auflagen</div><div class="mi-desc">für 2 Personen</div></div><div class="mi-price">€ 22,90</div></div><div class="menu-item"><div><div class="mi-num">157</div><div class="mi-name">Familien Pizza für 4 – 2 Auflagen</div><div class="mi-desc">für 4 Personen</div></div><div class="mi-price">€ 25,90</div></div><div class="menu-item"><div><div class="mi-num">158</div><div class="mi-name">Familien Pizza für 4 – 4 Auflagen</div><div class="mi-desc">für 4 Personen</div></div><div class="mi-price">€ 28,90</div></div><div class="menu-item"><div><div class="mi-num">159</div><div class="mi-name">Familien Pizza für 4 – 6 Auflagen</div><div class="mi-desc">für 4 Personen</div></div><div class="mi-price">€ 31,90</div></div><div class="menu-item"><div><div class="mi-num">148</div><div class="mi-name">American Pizza – 2 Auflagen</div></div><div class="mi-price">€ 15,90</div></div><div class="menu-item"><div><div class="mi-num">149</div><div class="mi-name">American Pizza – 4 Auflagen</div></div><div class="mi-price">€ 16,90</div></div><div class="menu-item"><div><div class="mi-num">150</div><div class="mi-name">American Pizza – 6 Auflagen</div></div><div class="mi-price">€ 18,90</div></div></div></div><div class="menu-section" data-cat="Burger"><div class="menu-cat-title">Burger</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">600</div><div class="mi-name">Galaxy Burger</div><div class="mi-desc">Cheeseburger mit Cheddar, Salat, Tomate, hausgemachter Sauce</div></div><div class="mi-price">€ 12,90</div></div><div class="menu-item"><div><div class="mi-num">601</div><div class="mi-name">Big Bang Burger</div><div class="mi-desc">Doppel-Patty mit extra Käse, Speck & Zwiebeln</div></div><div class="mi-price">€ 13,90</div></div><div class="menu-item"><div><div class="mi-num">602</div><div class="mi-name">Meteor Burger</div><div class="mi-desc">scharf mit Jalapeños, Cheese-Sauce & Zwiebeln</div></div><div class="mi-price">€ 12,90</div></div><div class="menu-item"><div><div class="mi-num">603</div><div class="mi-name">Planet Veggie</div><div class="mi-desc">vegetarisch mit Tomaten, Salat, Paprika und Schafskäse</div></div><div class="mi-price">€ 12,90</div></div><div class="menu-item"><div><div class="mi-num">604</div><div class="mi-name">Lunar Chicken</div><div class="mi-desc">knuspriger Hühner-Burger mit Zwiebeln, Salat</div></div><div class="mi-price">€ 12,90</div></div><div class="menu-item"><div><div class="mi-num">605</div><div class="mi-name">Rocket Burger</div><div class="mi-desc">3 Patties, Käse, Speck, Salat, Tomaten, Zwiebeln</div></div><div class="mi-price">€ 14,90</div></div><div class="menu-item"><div><div class="mi-num">606</div><div class="mi-name">Mars Deluxe</div><div class="mi-desc">Patty mit Speck, Rucola, Zwiebeln, Tomaten & Sauce</div></div><div class="mi-price">€ 12,90</div></div><div class="menu-item"><div><div class="mi-num">607</div><div class="mi-name">Black Hole Burger</div><div class="mi-desc">Patty, 2 Mozzarella Sticks, Cheddar, Salat, Tomaten & Sauce</div></div><div class="mi-price">€ 13,90</div></div><div class="menu-item"><div><div class="mi-num">608</div><div class="mi-name">Asteroid Burger</div><div class="mi-desc">Patty ohne Käse, Sauce, Salat, Tomaten und Zwiebeln</div></div><div class="mi-price">€ 12,90</div></div></div></div><div class="menu-section" data-cat="Pasta"><div class="menu-cat-title">Pasta</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">211</div><div class="mi-name">Alla Napoletana</div><div class="mi-desc">Zwiebel, Knoblauch in Tomatensauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">212</div><div class="mi-name">Alla Bolognese</div><div class="mi-desc">Fleischsauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">213</div><div class="mi-name">Al Tonno</div><div class="mi-desc">Thunfisch, Zwiebel in Tomatensauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">214</div><div class="mi-name">Al Arrabiata</div><div class="mi-desc">Kapern, Oliven, Chili in Rosasauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">215</div><div class="mi-name">Al Amatriciana</div><div class="mi-desc">Speck, Zwiebeln, Knoblauch in Tomatensauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">216</div><div class="mi-name">Alla Siciliana</div><div class="mi-desc">Artischocken, Oliven, Oregano, Chili in Tomatensauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">217</div><div class="mi-name">Carbonara</div><div class="mi-desc">Speck, Obers, Ei in Oberssauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">218</div><div class="mi-name">Alla Montese</div><div class="mi-desc">Schinken, Broccoli, Oberssauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">219</div><div class="mi-name">Con Funghi</div><div class="mi-desc">Champignons, Oberssauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">220</div><div class="mi-name">Gorgonzola</div><div class="mi-desc">Gorgonzola, Oberssauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">221</div><div class="mi-name">Aglio e Olio</div><div class="mi-desc">Knoblauch, Olivenöl, Pfefferonie</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">222</div><div class="mi-name">Frutti di Mare</div><div class="mi-desc">Meeresfrüchte, Knoblauch in Tomatensauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">223</div><div class="mi-name">Di Pollo</div><div class="mi-desc">Putenfleisch, Champignon in Obers</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">224</div><div class="mi-name">Spinaci</div><div class="mi-desc">Spinat, Zwiebeln in Obers</div></div><div class="mi-price">€ 10,70</div></div></div></div><div class="menu-section" data-cat="Al Forno"><div class="menu-cat-title">Al Forno</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">301</div><div class="mi-name">Lasagne</div></div><div class="mi-price">€ 10,40</div></div><div class="menu-item"><div><div class="mi-num">303</div><div class="mi-name">Broccoli al Forno</div><div class="mi-desc">mit Schinken, Broccoli, Oberssauce</div></div><div class="mi-price">€ 10,20</div></div><div class="menu-item"><div><div class="mi-num">304</div><div class="mi-name">Spinat al Forno</div><div class="mi-desc">mit Schafkäse, Blattspinat in Oberssauce & Ei</div></div><div class="mi-price">€ 10,20</div></div><div class="menu-item"><div><div class="mi-num">307</div><div class="mi-name">Makkeroni</div><div class="mi-desc">Penne mit Fleischsauce</div></div><div class="mi-price">€ 10,70</div></div><div class="menu-item"><div><div class="mi-num">308</div><div class="mi-name">Feta al Forno</div><div class="mi-desc">Feta, Cherrytomaten, Zwiebeln und Pfefferoni</div></div><div class="mi-price">€ 12,90</div></div></div></div><div class="menu-section" data-cat="Fleischgerichte"><div class="menu-cat-title">Fleischgerichte</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">411</div><div class="mi-name">Wienerschnitzel</div><div class="mi-desc">gebacken mit Pommes, Kartoffelsalat oder Reis</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">412</div><div class="mi-name">Putenschnitzel</div><div class="mi-desc">gebacken mit Pommes, Kartoffelsalat oder Reis</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">413</div><div class="mi-name">Putencordon Bleu</div><div class="mi-desc">gebacken mit Pommes, Kartoffelsalat oder Reis</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">414</div><div class="mi-name">Chicken-Frites</div><div class="mi-desc">gebackene Hühnerstreifen mit Pommes</div></div><div class="mi-price">€ 11,80</div></div><div class="menu-item"><div><div class="mi-num">417</div><div class="mi-name">Grillteller</div><div class="mi-desc">verschiedene Fleischsorten mit Bratkartoffeln & Sauce</div></div><div class="mi-price">€ 16,80</div></div><div class="menu-item"><div><div class="mi-num">418</div><div class="mi-name">Putenspiß</div><div class="mi-desc">mit gegrilltem Zwiebel, Paprika & Pommes</div></div><div class="mi-price">€ 14,80</div></div><div class="menu-item"><div><div class="mi-num">419</div><div class="mi-name">Piccata Milanese</div><div class="mi-desc">Putenschnitzel in Parmesan-Ei, mit Spaghetti Pomodoro</div></div><div class="mi-price">€ 12,80</div></div><div class="menu-item"><div><div class="mi-num">420</div><div class="mi-name">Scaloppini Prosciutto</div><div class="mi-desc">Putenfilet mit Schinken & Käse, dazu Pommes oder Reis</div></div><div class="mi-price">€ 14,80</div></div><div class="menu-item"><div><div class="mi-num">421</div><div class="mi-name">Scaloppini Funghi</div><div class="mi-desc">Putenfilet in Champignon-Oberssauce, dazu Reis oder Pommes</div></div><div class="mi-price">€ 14,80</div></div></div></div><div class="menu-section" data-cat="Gebackenes"><div class="menu-cat-title">Gebackenes</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">401</div><div class="mi-name">Emmentaler</div><div class="mi-desc">mit Pommes, Sauce Tartare</div></div><div class="mi-price">€ 10,90</div></div><div class="menu-item"><div><div class="mi-num">402</div><div class="mi-name">Mozzarella-Sticks</div><div class="mi-desc">mit Pommes & Sauce Tartare</div></div><div class="mi-price">€ 10,90</div></div><div class="menu-item"><div><div class="mi-num">404</div><div class="mi-name">Zwiebelringe</div><div class="mi-desc">mit Sauce Tarfare</div></div><div class="mi-price">€ 8,90</div></div><div class="menu-item"><div><div class="mi-num">406</div><div class="mi-name">Camembert</div><div class="mi-desc">mit Pommes & Preiselbeeren</div></div><div class="mi-price">€ 11,20</div></div><div class="menu-item"><div><div class="mi-num">407</div><div class="mi-name">Gemüse Laibchen</div><div class="mi-desc">mit Pommes & Salat, dazu Joghurtsauce</div></div><div class="mi-price">€ 11,90</div></div></div></div><div class="menu-section" data-cat="Risotto"><div class="menu-cat-title">Risotto</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">232</div><div class="mi-name">Risotto Frutti di Mare</div><div class="mi-desc">mit Meeresfrüchten</div></div><div class="mi-price">€ 11,30</div></div><div class="menu-item"><div><div class="mi-num">233</div><div class="mi-name">Risotto Mexicano</div><div class="mi-desc">mit Putenfleisch, rote Bohnen, Mais, scharf</div></div><div class="mi-price">€ 11,30</div></div><div class="menu-item"><div><div class="mi-num">235</div><div class="mi-name">Risotto Verdura</div><div class="mi-desc">gemischtes Gemüse in Tomatensauce</div></div><div class="mi-price">€ 11,30</div></div></div></div><div class="menu-section" data-cat="Kleiner Hunger"><div class="menu-cat-title">Kleiner Hunger</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">151</div><div class="mi-name">Pizza Spezial</div><div class="mi-desc">Gefüllt mit Pizzablockschinken & Käse</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">152</div><div class="mi-name">Pizza Brot</div></div><div class="mi-price">€ 3,90</div></div><div class="menu-item"><div><div class="mi-num">153</div><div class="mi-name">Schnitzel Sandwich</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">154</div><div class="mi-name">Mini Pizza</div><div class="mi-desc">mit 1 Auflage nach Wahl</div></div><div class="mi-price">€ 6,20</div></div></div></div><div class="menu-section" data-cat="Salate"><div class="menu-cat-title">Salate</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">721</div><div class="mi-name">Fitnesssalat</div><div class="mi-desc">köstliche Salatvariaton mit Putenfleisch</div></div><div class="mi-price">€ 9,90</div></div><div class="menu-item"><div><div class="mi-num">722</div><div class="mi-name">Insalata Verde</div><div class="mi-desc">grüner Salat</div></div><div class="mi-price">€ 5,50</div></div><div class="menu-item"><div><div class="mi-num">724</div><div class="mi-name">Insalata Mista</div><div class="mi-desc">gemischter Salat</div></div><div class="mi-price">€ 6,90</div></div><div class="menu-item"><div><div class="mi-num">728</div><div class="mi-name">Insalata Pecorino</div><div class="mi-desc">gemischter Salat mit Schafkäse & Oliven</div></div><div class="mi-price">€ 8,90</div></div><div class="menu-item"><div><div class="mi-num">72</div><div class="mi-name">Insalata Rucola</div><div class="mi-desc">Tomaten, Rucola, Grana</div></div><div class="mi-price">€ 9,90</div></div></div></div><div class="menu-section" data-cat="Beilagen"><div class="menu-cat-title">Beilagen</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">431</div><div class="mi-name">Pommes / Reis</div></div><div class="mi-price">€ 3,50</div></div><div class="menu-item"><div><div class="mi-num">432</div><div class="mi-name">Kartoffelsalat</div></div><div class="mi-price">€ 3,50</div></div><div class="menu-item"><div><div class="mi-num">433</div><div class="mi-name">Bratkartoffeln</div></div><div class="mi-price">€ 4,50</div></div><div class="menu-item"><div><div class="mi-num">434</div><div class="mi-name">Extra Sauce</div><div class="mi-desc">cocktail / kebab / mayo / ketchup / tartare</div></div><div class="mi-price">€ 1,50</div></div></div></div><div class="menu-section" data-cat="Palatschinken"><div class="menu-cat-title">Palatschinken</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">504</div><div class="mi-name">Spinaci Palatschinken</div><div class="mi-desc">gefüllt mit Spinat & Schafskäse</div></div><div class="mi-price">€ 8,90</div></div><div class="menu-item"><div><div class="mi-num">502</div><div class="mi-name">Prosciutto Palatschinken</div><div class="mi-desc">gefüllt mit Pizzablockschinken & Champignon</div></div><div class="mi-price">€ 8,90</div></div><div class="menu-item"><div><div class="mi-num">515</div><div class="mi-name">Piatto di Carne</div><div class="mi-desc">gefüllt mit Fleischsauce</div></div><div class="mi-price">€ 8,90</div></div></div></div><div class="menu-section" data-cat="Dessert"><div class="menu-cat-title">Dessert</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">801</div><div class="mi-name">Tiramisu</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">802</div><div class="mi-name">Topfenstrudel</div></div><div class="mi-price">€ 5,50</div></div><div class="menu-item"><div><div class="mi-num">803</div><div class="mi-name">Mohr im Hemd</div></div><div class="mi-price">€ 5,50</div></div><div class="menu-item"><div><div class="mi-num">804</div><div class="mi-name">Nußpalatschinken</div><div class="mi-desc">2 Stk.</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">805</div><div class="mi-name">Topfenpalatschinken</div><div class="mi-desc">2 Stk.</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">806</div><div class="mi-name">Marmeladepalatschinken</div><div class="mi-desc">2 Stk.</div></div><div class="mi-price">€ 5,90</div></div><div class="menu-item"><div><div class="mi-num">807</div><div class="mi-name">Eismarillenknödel</div></div><div class="mi-price">€ 6,90</div></div></div></div><div class="menu-section" data-cat="Getränke"><div class="menu-cat-title">Getränke</div><div class="menu-rows"><div class="menu-item"><div><div class="mi-num">901</div><div class="mi-name">Coca Cola</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">902</div><div class="mi-name">Cola Light</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">903</div><div class="mi-name">Fanta</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">904</div><div class="mi-name">Sprite</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">905</div><div class="mi-name">Eistee Zitrone</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">906</div><div class="mi-name">Eistee Pfirsich</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">907</div><div class="mi-name">Almdudler</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 3,20</div></div><div class="menu-item"><div><div class="mi-num">908</div><div class="mi-name">Mineralwasser</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,50</div></div><div class="menu-item"><div><div class="mi-num">909</div><div class="mi-name">Red Bull</div><div class="mi-desc">0,25 L</div></div><div class="mi-price">€ 3,10</div></div><div class="menu-item"><div><div class="mi-num">910</div><div class="mi-name">Bier</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 3,10</div></div><div class="menu-item"><div><div class="mi-num">911</div><div class="mi-name">Ayran</div><div class="mi-desc">0,33 L</div></div><div class="mi-price">€ 2,20</div></div><div class="menu-item"><div><div class="mi-num">912</div><div class="mi-name">Cappy Orange</div><div class="mi-desc">0,5 L</div></div><div class="mi-price">€ 2,80</div></div><div class="menu-item"><div><div class="mi-num">913</div><div class="mi-name">Cola (Dose)</div><div class="mi-desc">0,33 L</div></div><div class="mi-price">€ 2,50</div></div><div class="menu-item"><div><div class="mi-num">914</div><div class="mi-name">Fritz Kola</div><div class="mi-desc">0,33 L</div></div><div class="mi-price">€ 3,50</div></div></div></div>
-  </div>
-</section>
+Gruppenbestellungs-Rabatt
+Gültig bis Ende 2026 · Nur bei telefonischer Bestellung · Ab € 20,00 Bestellwert
+PRIME DAYS
+Montag · Dienstag · Mittwoch
+15%
+RABATT
+REGULÄRE TAGE
+Donnerstag · Freitag
+10%
+RABATT
 
-<section id="angebot">
-  <div class="container">
-    <div class="sec-eyebrow">Exklusiv für Schulen & Firmen</div>
-    <h2 class="sec-title">Schul- & <em>Firmenangebot</em></h2>
-    <div class="sec-divider"></div>
-    <div class="offer-wrap">
-      <div class="offer-header">
-        <h3>Gruppenbestellungs-Rabatt</h3>
-        <p>Gültig bis Ende 2026 · Nur bei telefonischer Bestellung · Ab € 20,00 Bestellwert</p>
-      </div>
-      <div class="offer-table">
-        <div class="offer-col prime">
-          <div class="offer-days-label">Prime Days</div>
-          <div class="offer-days">Montag · Dienstag · Mittwoch</div>
-          <div class="offer-pct gold">15%</div>
-          <div class="offer-type">Rabatt</div>
-        </div>
-        <div class="offer-col">
-          <div class="offer-days-label">Reguläre Tage</div>
-          <div class="offer-days">Donnerstag · Freitag</div>
-          <div class="offer-pct silver">10%</div>
-          <div class="offer-type">Rabatt</div>
-        </div>
-      </div>
-      <div class="offer-conditions">
-        <div class="oc"><div class="oc-dot"></div><span class="oc-text">Mindestbestellwert € 20,00</span></div>
-        <div class="oc"><div class="oc-dot"></div><span class="oc-text">Nur gültig bei Anruf</span></div>
-        <div class="oc"><div class="oc-dot"></div><span class="oc-text">Gültig bis Ende 2026</span></div>
-        <div class="oc"><div class="oc-dot"></div><span class="oc-text">Kein Samstag / Sonntag</span></div>
-      </div>
-      <div class="offer-cta">
-        <a class="btn-gold" href="tel:0225271992">📞 02252 71 99 2</a>
-      </div>
-    </div>
-  </div>
-</section>
+Mindestbestellwert € 20,00
 
-<section id="lieferung">
-  <div class="container">
-    <div class="sec-eyebrow">Zustellung</div>
-    <h2 class="sec-title">Liefer<em>gebiete</em></h2>
-    <div class="sec-divider"></div>
-    <div class="delivery-grid">
-      <div class="dc"><div class="dc-area">Bad Vöslau</div><div class="dc-zone">Direktes Liefergebiet</div><div class="dc-fee">Ab € 10,00 frei Haus</div><div class="dc-min">Unter € 10 → + € 2,00 Zustellgebühr</div></div>
-      <div class="dc"><div class="dc-area">Nahe Gebiete</div><div class="dc-zone">Kottingbrunn · Sooß · Baden · Leobersdorf</div><div class="dc-fee">Ab € 15,00 → + € 2,00</div></div>
-      <div class="dc"><div class="dc-area">Weite Gebiete</div><div class="dc-zone">Pottenstein · Berndorf · St. Veit a.d. Triesting</div><div class="dc-fee">Ab € 45,00 → + € 3,00</div></div>
-      <div class="dc" style="border-left:2px solid var(--gold)"><div class="dc-area">Online bestellen</div><div class="dc-zone">Bequem über unsere Plattform</div><a href="https://pizza-planet-badvoeslau.at" target="_blank" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none">pizza-planet-badvoeslau.at →</a></div>
-    </div>
-  </div>
-</section>
+Nur gültig bei Anruf
 
-<section id="kontakt">
-  <div class="container">
-    <div class="sec-eyebrow">Besuchen Sie uns</div>
-    <h2 class="sec-title">Kontakt & <em>Adresse</em></h2>
-    <div class="sec-divider"></div>
-    <div class="kontakt-grid">
-      <div class="kc">
-        <div class="kc-title">Kontaktinformationen</div>
-        <div class="kc-row"><span class="kc-icon">📞</span><div><div class="kc-label">Telefon</div><div class="kc-val"><a class="kc-link" href="tel:0225271992">02252 71 99 2</a></div></div></div>
-        <div class="kc-row"><span class="kc-icon">📍</span><div><div class="kc-label">Adresse</div><div class="kc-val">Wr. Neustädter Straße 1–3<br>2540 Bad Vöslau</div></div></div>
-        <div class="kc-row"><span class="kc-icon">🕐</span><div><div class="kc-label">Öffnungszeiten</div><div class="kc-val">Täglich 11:00 – 22:00 Uhr</div></div></div>
-        <div class="kc-row"><span class="kc-icon">🌐</span><div><div class="kc-label">Website</div><div class="kc-val"><a class="kc-link" href="https://pizza-planet-badvoeslau.at" target="_blank">pizza-planet-badvoeslau.at</a></div></div></div>
-        <a class="map-btn" href="https://maps.google.com/?q=Wr+Neustedter+Strasse+1-3+Bad+Voslau" target="_blank">In Google Maps öffnen</a>
-      </div>
-      <div class="kc">
-        <div class="kc-title">Jetzt bestellen</div>
-        <p style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:24px">Rufen Sie uns an oder bestellen Sie bequem über unsere Online-Plattform. Seit 1995 täglich frisch für Bad Vöslau und Umgebung.</p>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <a class="btn-gold" href="tel:0225271992" style="text-align:center">📞 02252 71 99 2 – Anrufen</a>
-          <a class="btn-outline" href="https://pizza-planet-badvoeslau.at" target="_blank" style="text-align:center">Online bestellen</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+Gültig bis Ende 2026
 
-<footer>
-  <div class="footer-logo">
-    <img src="data:image/jpeg;base64,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" alt="Pizza Planet">
-    <span class="footer-logo-text">Pizza Planet</span>
-  </div>
-  <div class="footer-div"></div>
-  <div class="footer-info">
-    <p>Wr. Neustädter Straße 1–3 · 2540 Bad Vöslau · 02252 71 99 2</p>
-    <p>Täglich 11:00 – 22:00 Uhr</p>
-    <p style="margin-top:6px;font-size:10px">© 2025 Pizza Planet Bad Vöslau</p>
-  </div>
-</footer>
+Kein Samstag / Sonntag
+📞 02252 71 99 2
+ZUSTELLUNG
+Liefergebiete
 
-<script>
-var activeCat = 'Alle';
-function filterCat(cat) {
-  activeCat = cat;
-  var tabs = document.querySelectorAll('.cat-tab');
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].className = tabs[i].textContent === cat ? 'cat-tab active' : 'cat-tab';
-  }
-  applyFilter();
-}
-function filterSearch() { applyFilter(); }
-function applyFilter() {
-  var q = document.getElementById('search').value.toLowerCase();
-  var sections = document.querySelectorAll('.menu-section');
-  for (var i = 0; i < sections.length; i++) {
-    var sec = sections[i];
-    var secCat = sec.getAttribute('data-cat');
-    var catOk = activeCat === 'Alle' || secCat === activeCat;
-    var items = sec.querySelectorAll('.menu-item');
-    var visCount = 0;
-    for (var j = 0; j < items.length; j++) {
-      var item = items[j];
-      var name = item.querySelector('.mi-name') ? item.querySelector('.mi-name').textContent.toLowerCase() : '';
-      var desc = item.querySelector('.mi-desc') ? item.querySelector('.mi-desc').textContent.toLowerCase() : '';
-      var num = item.querySelector('.mi-num') ? item.querySelector('.mi-num').textContent.toLowerCase() : '';
-      var textOk = !q || name.indexOf(q) >= 0 || desc.indexOf(q) >= 0 || num.indexOf(q) >= 0;
-      if (catOk && textOk) { item.style.display = ''; visCount++; }
-      else { item.style.display = 'none'; }
-    }
-    sec.style.display = (catOk && visCount > 0) ? '' : 'none';
-  }
-}
-</script>
-</body>
-</html>
+Bad Vöslau
+Direktes Liefergebiet
+Ab € 10,00 frei Haus
+Unter € 10 → + € 2,00 Zustellgebühr
+Nahe Gebiete
+Kottingbrunn · Sooß · Baden · Leobersdorf
+Ab € 15,00 → + € 2,00
+Weite Gebiete
+Pottenstein · Berndorf · St. Veit a.d. Triesting
+Ab € 45,00 → + € 3,00
+Online bestellen
+Bequem über unsere Plattform
+pizza-planet-badvoeslau.at →
+BESUCHEN SIE UNS
+Kontakt & Adresse
+
+KONTAKTINFORMATIONEN
+📞
+TELEFON
+02252 71 99 2
+📍
+ADRESSE
+Wr. Neustädter Straße 1–3
+2540 Bad Vöslau
+🕐
+ÖFFNUNGSZEITEN
+Täglich 11:00 – 22:00 Uhr
+🌐
+WEBSITE
+pizza-planet-badvoeslau.at
+IN GOOGLE MAPS ÖFFNEN
+JETZT BESTELLEN
+Rufen Sie uns an oder bestellen Sie bequem über unsere Online-Plattform. Seit 1995 täglich frisch für Bad Vöslau und Umgebung.
+📞 02252 71 99 2 – ANRUFEN
+ONLINE BESTELLEN
+￼
+Pizza Planet
+
+Wr. Neustädter Straße 1–3 · 2540 Bad Vöslau · 02252 71 99 2
+Täglich 11:00 – 22:00 Uhr
+© 2025 Pizza Planet Bad Vöslau
